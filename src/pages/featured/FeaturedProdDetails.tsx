@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const FeaturedProdDetails = ({ prod }) => {
   const { image, title, brand, available_quantity, price, rating } = prod;
   return (
@@ -14,7 +16,9 @@ const FeaturedProdDetails = ({ prod }) => {
           <p>{rating}</p>
 
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">See Details</button>
+            <Link to="/products" className="btn btn-primary">
+              See Details
+            </Link>
           </div>
         </div>
       </div>
