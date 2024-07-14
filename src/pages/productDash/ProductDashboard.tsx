@@ -1,42 +1,62 @@
+import DataTable from "react-data-table-component";
+
 const ProductDashboard = () => {
+  const columns = [
+    {
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={row.image}
+          alt="Product"
+          style={{ width: "50px", height: "auto" }}
+        />
+      ),
+    },
+    {
+      name: "Name",
+      selector: (row) => row.name,
+    },
+    {
+      name: "Brand",
+      selector: (row) => row.brand,
+    },
+    {
+      name: "Price",
+      selector: (row) => row.price,
+    },
+    {
+      name: "Brand",
+      selector: (row) => row.brand,
+    },
+    {
+      name: "Description",
+      selector: (row) => row.Description,
+    },
+  ];
+  const data = [
+    {
+      id: 1,
+      name: "omi",
+      brand: "Brand A",
+      price: "$100",
+      description: "Lorem ipsum dolor sit amet.",
+      image:
+        "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg",
+    },
+    {
+      id: 2,
+      name: "aahare",
+      brand: "Brand B",
+      price: "$150",
+      description: "Consectetur adipiscing elit.",
+      image:
+        "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg",
+    },
+  ];
+
   return (
-    <div>
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            <tr className="bg-base-200">
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <th>3</th>
-              <td>Brice Swyre</td>
-              <td>Tax Accountant</td>
-              <td>Red</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div className="p-10">
+      <DataTable columns={columns} data={data}></DataTable>
     </div>
   );
 };
