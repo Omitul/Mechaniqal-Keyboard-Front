@@ -55,8 +55,13 @@ const ProductDashboard = () => {
   ];
 
   return (
-    <div className="p-10">
+    <div className="p-10 border border-blue-600 rounded-lg">
       <DataTable columns={columns} data={data}></DataTable>
+      <div className="flex flex-row items-center justify-center gap-4">
+        <button className="btn btn-accent">Add-Product</button>
+        <button className="btn bg-purple-400">Update</button>
+        <button className="btn bg-red-600">Delete</button>
+      </div>
     </div>
   );
 };
