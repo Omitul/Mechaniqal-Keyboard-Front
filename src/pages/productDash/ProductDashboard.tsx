@@ -65,6 +65,23 @@ const ProductDashboard = () => {
       name: "Brand",
       selector: (row) => row.brand,
     },
+    {
+      cell: (row) => (
+        <button
+          className="btn bg-purple-400 ml-60"
+          onClick={() => handleUpdate(row)}
+        >
+          Update
+        </button>
+      ),
+    },
+    {
+      cell: (row) => (
+        <button className="btn bg-red-600" onClick={() => handleDelete(row)}>
+          Delete
+        </button>
+      ),
+    },
   ];
 
   const data = [
@@ -98,11 +115,12 @@ const ProductDashboard = () => {
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-          <div className="bg-white p-8 rounded-lg z-10">
+          <div className="bg-green-100 p-8 rounded-lg z-10">
             <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
             <form onSubmit={handleSubmit}>
-              <label className="block mb-2 font-semibold">
-                name:
+              <div className="mb-4">
+                <label className="block  font-semibold"> Name</label>
+
                 <input
                   type="text"
                   name="name"
@@ -111,9 +129,9 @@ const ProductDashboard = () => {
                   className="form-input mt-1"
                   required
                 />
-              </label>
-              <label className="block mb-2 font-semibold">
-                Price:
+              </div>
+              <div className="mb-4">
+                <label className="block  font-semibold">Price</label>
                 <input
                   type="text"
                   name="price"
@@ -122,10 +140,11 @@ const ProductDashboard = () => {
                   className="form-input mt-1"
                   required
                 />
-              </label>
+              </div>
 
-              <label className="block mb-2 font-semibold">
-                Description:
+              <div className="mb-4">
+                <label className="block font-semibold">Description</label>
+
                 <input
                   type="text"
                   name="description"
@@ -134,10 +153,13 @@ const ProductDashboard = () => {
                   className="form-input mt-1"
                   required
                 />
-              </label>
+              </div>
 
-              <label className="block mb-2 font-semibold">
-                Available Quantity:
+              <div className="mb-4">
+                <label className="block  font-semibold">
+                  Available Quantity
+                </label>
+
                 <input
                   type="text"
                   name="quantity"
@@ -146,10 +168,10 @@ const ProductDashboard = () => {
                   className="form-input mt-1"
                   required
                 />
-              </label>
+              </div>
+              <div className="mb-4">
+                <label className="block  font-semibold">Rating:</label>
 
-              <label className="block mb-2 font-semibold">
-                Rating:
                 <input
                   type="text"
                   name="rating"
@@ -158,10 +180,11 @@ const ProductDashboard = () => {
                   className="form-input mt-1"
                   required
                 />
-              </label>
+              </div>
 
-              <label className="block mb-2 font-semibold">
-                Image:
+              <div className="mb-4">
+                <label className="block  font-semibold">Image:</label>
+
                 <input
                   type="text"
                   name="image"
@@ -170,7 +193,7 @@ const ProductDashboard = () => {
                   className="form-input mt-1"
                   required
                 />
-              </label>
+              </div>
 
               <div className="flex justify-end mt-4">
                 <button type="submit" className="btn bg-green-500">
@@ -193,8 +216,6 @@ const ProductDashboard = () => {
         <button className="btn btn-accent" onClick={toggleModal}>
           Add Product
         </button>
-        <button className="btn bg-purple-400">Update</button>
-        <button className="btn bg-red-600">Delete</button>
       </div>
     </div>
   );
