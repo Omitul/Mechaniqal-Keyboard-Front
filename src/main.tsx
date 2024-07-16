@@ -5,9 +5,13 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes/router.tsx";
 // main.tsx or index.tsx
 import "tailwindcss/tailwind.css";
+import { Provider } from "react-redux";
+import { store } from "./redux/store.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <Provider store={store}>
+      <RouterProvider router={router}></RouterProvider>
+    </Provider>
   </React.StrictMode>
 );
