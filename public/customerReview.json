@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "testimonial": "Great product! It exceeded my expectations and I would highly recommend it to anyone looking for quality."
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "testimonial": "Excellent service! The support team was very helpful and responsive. I'm impressed with their professionalism."
+  },
+  {
+    "id": 3,
+    "name": "Michael Johnson",
+    "email": "michael.johnson@example.com",
+    "testimonial": "The product arrived on time and in perfect condition. I'm very satisfied with my purchase."
+  },
+  {
+    "id": 4,
+    "name": "Omitul",
+    "email": "michael.johnson@example.com",
+    "testimonial": "The product arrived on time and in perfect condition. I'm very satisfied with my purchase."
+  }
+]
