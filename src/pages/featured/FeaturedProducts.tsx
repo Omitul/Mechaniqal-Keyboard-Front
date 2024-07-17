@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import FeaturedProdDetails from "./FeaturedProdDetails";
 
 const FeaturedProduct: React.FC = () => {
@@ -70,6 +71,11 @@ const FeaturedProduct: React.FC = () => {
         {fakedata.map((prod) => (
           <FeaturedProdDetails key={prod.id} prod={prod}></FeaturedProdDetails>
         ))}
+      </div>
+      <div className="flex items-center justify-center mb-3">
+        <Link to="/products" className="btn btn-primary">
+          See Details
+        </Link>
       </div>
     </div>
   );

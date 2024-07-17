@@ -17,8 +17,8 @@ const ProductsDetails = ({ prod }) => {
           <p>{rating}</p>
 
           <div className="card-actions justify-end">
-            <Link to="/products" className="btn btn-primary">
-              See More
+            <Link to="/product-details" className="btn btn-primary">
+              See Details
             </Link>
           </div>
         </div>

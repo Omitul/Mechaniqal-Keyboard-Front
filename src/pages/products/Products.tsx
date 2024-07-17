@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ProductsDetails from "./ProductsDetails";
 
 const Products = () => {
@@ -72,6 +73,7 @@ const Products = () => {
           ))}
         </div>
       </div>
+      <div></div>
     </div>
   );
 };

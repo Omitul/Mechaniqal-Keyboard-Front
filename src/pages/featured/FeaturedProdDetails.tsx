@@ -14,12 +14,6 @@ const FeaturedProdDetails = ({ prod }) => {
           <p>{available_quantity}.</p>
           <p>{price}</p>
           <p>{rating}</p>
-
-          <div className="card-actions justify-end">
-            <Link to="/products" className="btn btn-primary">
-              See Details
-            </Link>
-          </div>
         </div>
       </div>
     </div>
