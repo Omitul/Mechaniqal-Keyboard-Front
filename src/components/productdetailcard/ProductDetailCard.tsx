@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 
 const ProductDetailCard = () => {
-  const handleAddToCart = (product) => {};
-
   const pdata = {
     image:
       "https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg",
@@ -41,7 +39,7 @@ const ProductDetailCard = () => {
             </p>
 
             <div className="mt-20">
-              <Link onClick={} to="/cart" className="btn btn-primary">
+              <Link to="/cart" className="btn btn-primary">
                 Add To Cart
               </Link>
             </div>

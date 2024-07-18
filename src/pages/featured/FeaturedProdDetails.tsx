@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const FeaturedProdDetails = ({ prod }) => {
   const { image, title, brand, available_quantity, price, rating } = prod;
   return (

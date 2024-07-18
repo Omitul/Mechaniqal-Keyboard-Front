@@ -1,14 +1,17 @@
 import { useState } from "react";
-import DataTable from "react-data-table-component";
+import { useAddProductMutation } from "../../redux/features/products/ProductSlice";
+import ProductTable from "./ProductTable";
 
 const ProductDashboard = () => {
+  const [addProduct, { isLoading }] = useAddProductMutation();
+
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     brand: "",
     price: "",
     description: "",
-    quantity: "",
+    available_quantity: "",
     rating: "",
     image: "",
   });
@@ -20,13 +23,17 @@ const ProductDashboard = () => {
         brand: "",
         price: "",
         description: "",
-        quantity: "",
+        available_quantity: "",
         rating: "",
         image: "",
       });
     }
     setShowModal(!showModal);
   };
+
+  if (isLoading) {
+    return <p>Loading......</p>;
+  }
 
   const handleInputChange = (e) => {
     setFormData({
@@ -35,83 +42,29 @@ const ProductDashboard = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("check", formData);
-
-    setFormData({
-      name: "",
-      brand: "",
-      price: "",
-      description: "",
-      quantity: "",
-      rating: "",
-      image: "",
-    });
-
-    setShowModal(false);
+    try {
+      await addProduct(formData).unwrap();
+      console.log("Product added successfully!");
+      setFormData({
+        name: "",
+        brand: "",
+        price: "",
+        description: "",
+        available_quantity: "",
+        rating: "",
+        image: "",
+      });
+      setShowModal(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  const columns = [
-    {
-      name: "Product Name",
-      selector: (row) => row.name,
-    },
-    {
-      name: "Price",
-      selector: (row) => row.price,
-    },
-    {
-      name: "Brand",
-      selector: (row) => row.brand,
-    },
-    {
-      cell: (row) => (
-        <button
-          className="btn bg-purple-400 ml-60"
-          onClick={() => handleUpdate(row)}
-        >
-          Update
-        </button>
-      ),
-    },
-    {
-      cell: (row) => (
-        <button className="btn bg-red-600" onClick={() => handleDelete(row)}>
-          Delete
-        </button>
-      ),
-    },
-  ];
-
-  const data = [
-    {
-      id: 1,
-      name: "omi",
-      brand: "Brand A",
-      price: "$100",
-      description: "Lorem ipsum dolor sit amet.",
-      avalablequantity: 2,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg",
-    },
-    {
-      id: 2,
-      name: "aahare",
-      brand: "Brand B",
-      price: "$150",
-      description: "Consectetur adipiscing elit.",
-      avalablequantity: 2,
-
-      image:
-        "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg",
-    },
-  ];
 
   return (
     <div className="p-10">
-      <DataTable columns={columns} data={data} />
-
+      <ProductTable></ProductTable>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -162,8 +115,8 @@ const ProductDashboard = () => {
 
                 <input
                   type="text"
-                  name="quantity"
-                  value={formData.quantity}
+                  name="available_quantity"
+                  value={formData.available_quantity}
                   onChange={handleInputChange}
                   className="form-input mt-1"
                   required
