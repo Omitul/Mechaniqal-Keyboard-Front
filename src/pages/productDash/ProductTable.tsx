@@ -1,6 +1,7 @@
 import DataTable from "react-data-table-component";
 import { useDeleteProductMutation } from "../../redux/features/products/ProductSlice";
 import { useGetProductQuery } from "../../redux/features/products/ProductSlice";
+import Swal from "sweetalert2";
 
 const ProductTable = () => {
   const { data, isLoading } = useGetProductQuery({});
@@ -15,13 +16,21 @@ const ProductTable = () => {
   }
 
   const handleDelete = async (productId: string): Promise<void> => {
-    try {
-      console.log(productId, "asenai");
-      await deleteProduct(productId).unwrap(); // Use unwrap to handle successful or erroneous responses
-      console.log("Product deleted successfully");
-    } catch (error) {
-      console.log("hoinai", error);
-    }
+    Swal.fire({
+      title: "Are you sure want to delete this product?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("Product deleted successfully");
+        Swal.fire("Deleted Succesfully!", "", "success");
+        deleteProduct(productId).unwrap(); // Use unwrap to handle successful or erroneous responses
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   };
 
   console.log(data);

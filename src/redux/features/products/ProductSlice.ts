@@ -24,6 +24,7 @@ export const ProductSlice = baseApi.injectEndpoints({
         url: `product/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["posts"],
     }),
   }),
 });
