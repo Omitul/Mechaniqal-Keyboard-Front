@@ -1,11 +1,12 @@
 import DataTable from "react-data-table-component";
 import { useDeleteProductMutation } from "../../redux/features/products/ProductSlice";
-import { useDispatch } from "react-redux";
 import { useGetProductQuery } from "../../redux/features/products/ProductSlice";
 
 const ProductTable = () => {
   const { data, isLoading } = useGetProductQuery({});
-
+  // const {} = useDeleteProductMutation();
+  const [deleteProduct, { isError }] = useDeleteProductMutation();
+  console.log(isError);
   if (isLoading) {
     <p>Loading.......</p>;
   }
@@ -13,11 +14,15 @@ const ProductTable = () => {
     return <p>No data is present</p>;
   }
 
-  const dispatch = useDispatch();
-
-  const handleDelete: (arg0: any) => void(ProductId: string) => {
-        dispatch(useDeleteProductMutation(ProductId));
-  }
+  const handleDelete = async (productId: string): Promise<void> => {
+    try {
+      console.log(productId, "asenai");
+      await deleteProduct(productId).unwrap(); // Use unwrap to handle successful or erroneous responses
+      console.log("Product deleted successfully");
+    } catch (error) {
+      console.log("hoinai", error);
+    }
+  };
 
   console.log(data);
   const tdata = data.data;
@@ -37,9 +42,10 @@ const ProductTable = () => {
     },
     {
       cell: (row) => (
+        // console.log(row._id),
         <button
           className="btn bg-purple-400 ml-60"
-          onClick={() => handleUpdate(row.id)}
+          onClick={() => handleUpdate(row.id as string)}
         >
           Update
         </button>
@@ -47,7 +53,10 @@ const ProductTable = () => {
     },
     {
       cell: (row) => (
-        <button className="btn bg-red-600" onClick={() => handleDelete(row.id)}>
+        <button
+          className="btn bg-red-600"
+          onClick={() => handleDelete(row._id)}
+        >
           Delete
         </button>
       ),
