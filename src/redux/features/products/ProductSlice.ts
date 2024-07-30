@@ -8,6 +8,7 @@ export const ProductSlice = baseApi.injectEndpoints({
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["posts"],
     }),
 
     GetProduct: builder.query({
@@ -15,8 +16,20 @@ export const ProductSlice = baseApi.injectEndpoints({
         url: "products",
         method: "GET",
       }),
+      providesTags: ["posts"],
+    }),
+
+    DeleteProduct: builder.mutation({
+      query: (id) => ({
+        url: `product/:${id}`,
+        method: "DELETE",
+      }),
     }),
   }),
 });
 
-export const { useAddProductMutation, useGetProductQuery } = ProductSlice;
+export const {
+  useAddProductMutation,
+  useGetProductQuery,
+  useDeleteProductMutation,
+} = ProductSlice;

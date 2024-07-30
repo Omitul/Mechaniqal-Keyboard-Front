@@ -1,8 +1,10 @@
 import DataTable from "react-data-table-component";
-import { ProductSlice } from "../../redux/features/products/ProductSlice";
+import { useDeleteProductMutation } from "../../redux/features/products/ProductSlice";
+import { useDispatch } from "react-redux";
+import { useGetProductQuery } from "../../redux/features/products/ProductSlice";
 
 const ProductTable = () => {
-  const { data, isLoading } = ProductSlice.useGetProductQuery({});
+  const { data, isLoading } = useGetProductQuery({});
 
   if (isLoading) {
     <p>Loading.......</p>;
@@ -10,6 +12,13 @@ const ProductTable = () => {
   if (!data) {
     return <p>No data is present</p>;
   }
+
+  const dispatch = useDispatch();
+
+  const handleDelete: (arg0: any) => void(ProductId: string) => {
+        dispatch(useDeleteProductMutation(ProductId));
+  }
+
   console.log(data);
   const tdata = data.data;
 
@@ -30,7 +39,7 @@ const ProductTable = () => {
       cell: (row) => (
         <button
           className="btn bg-purple-400 ml-60"
-          onClick={() => handleUpdate(row)}
+          onClick={() => handleUpdate(row.id)}
         >
           Update
         </button>
@@ -38,7 +47,7 @@ const ProductTable = () => {
     },
     {
       cell: (row) => (
-        <button className="btn bg-red-600" onClick={() => handleDelete(row)}>
+        <button className="btn bg-red-600" onClick={() => handleDelete(row.id)}>
           Delete
         </button>
       ),
@@ -52,3 +61,6 @@ const ProductTable = () => {
 };
 
 export default ProductTable;
+function handleUpdate(id: any): void {
+  throw new Error("Function not implemented.");
+}
