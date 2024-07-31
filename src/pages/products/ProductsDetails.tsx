@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ProductsDetails = ({ prod }) => {
-  const { image, title, brand, available_quantity, price, rating } = prod;
+  const { image, name, brand, available_quantity, price, rating } = prod;
+  const navigate = useNavigate();
 
+  const handleSeeDetails = () => {
+    navigate("/product-details", { state: prod });
+  };
   return (
     <div>
       <div className="card card-side bg-base-100 shadow-xl">
@@ -10,16 +14,16 @@ const ProductsDetails = ({ prod }) => {
           <img src={image} alt="Movie" />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{title}</h2>
+          <h2 className="card-title">{name}</h2>
           <p>{brand}</p>
           <p>{available_quantity}.</p>
           <p>{price}</p>
           <p>{rating}</p>
 
           <div className="card-actions justify-end">
-            <Link to="/product-details" className="btn btn-primary">
+            <button onClick={handleSeeDetails} className="btn btn-primary">
               See Details
-            </Link>
+            </button>
           </div>
         </div>
       </div>

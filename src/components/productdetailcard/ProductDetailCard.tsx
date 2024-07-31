@@ -1,17 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const ProductDetailCard = () => {
-  const pdata = {
-    image:
-      "https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg",
-    title: "Sample Movie Title",
-    brand: "Brand Name",
-    available_quantity: 10,
-    price: "$19.99",
-    rating: 4.5,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget augue nec urna aliquam tristique. Integer sit amet lectus in risus cursus bibendum. Quisque mattis vel risus eget aliquam.",
-  };
+  const location = useLocation();
+  const prod = location.state;
+  const { name, price, brand, image, available_quantity, rating } = prod;
+
   return (
     /// ashole ekhane id dhore oi product db theke fetch kore then details show kora lagbe, but lets try for a json data first,as backend is not ready
 
@@ -19,23 +12,23 @@ const ProductDetailCard = () => {
       <div className="border border-gray-300 rounded-lg shadow-xl p-6 bg-green-300">
         <div className="card card-side bg-base-100 shadow-xl p-32 max-w-max  mx-auto gap-x-7">
           <figure>
-            <img src={pdata.image} className="h-96 w-full" alt="Movie" />
+            <img src={image} className="h-96 w-full" alt="Movie" />
           </figure>
           <div className="">
-            <h2 className="text-6xl mb-4">{pdata.title}</h2>
+            <h2 className="text-6xl mb-4">{name}</h2>
             <p className="mb-4 text-2xl">
-              <span className="font-semibold">Brand:</span> {pdata.brand}
+              <span className="font-semibold">Brand:</span> {brand}
             </p>
             <p className="mb-4 text-2xl">
               <span className="font-semibold">Available Quantity:</span>{" "}
-              {pdata.available_quantity}.
+              {available_quantity}.
             </p>
             <p className="mb-4 text-2xl">
               <span className="font-semibold">Price: </span>
-              {pdata.price}
+              {price}
             </p>
             <p className="mb-4 text-2xl">
-              <span className="font-semibold">Rating:</span> {pdata.rating}
+              <span className="font-semibold">Rating:</span> {rating}
             </p>
 
             <div className="mt-20">
