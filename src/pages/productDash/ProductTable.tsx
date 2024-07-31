@@ -1,84 +1,129 @@
 import DataTable from "react-data-table-component";
-import { useDeleteProductMutation } from "../../redux/features/products/ProductSlice";
+import {
+  useDeleteProductMutation,
+  useUpdateProductMutation,
+} from "../../redux/features/products/ProductSlice";
 import { useGetProductQuery } from "../../redux/features/products/ProductSlice";
 import Swal from "sweetalert2";
+import UpdateModal from "../../components/updatemodalcard/UpdateModal";
+import { useState } from "react";
+import { Product, RowData } from "../../types";
 
 const ProductTable = () => {
+  const initialProduct = {
+    name: "",
+    brand: "",
+    price: Number(""),
+    description: "",
+    available_quantity: Number(""),
+    rating: Number(""),
+    image: "",
+  };
+
   const { data, isLoading } = useGetProductQuery({});
-  // const {} = useDeleteProductMutation();
-  const [deleteProduct, { isError }] = useDeleteProductMutation();
-  console.log(isError);
+  const [updateProduct] = useUpdateProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] =
+    useState<Product>(initialProduct);
+
   if (isLoading) {
-    <p>Loading.......</p>;
+    return <p>Loading.......</p>;
   }
+
   if (!data) {
     return <p>No data is present</p>;
   }
 
-  const handleDelete = async (productId: string): Promise<void> => {
+  const handleUpdate = async (data: RowData) => {
+    setSelectedProduct(data);
+    setShowUpdateModal(!showUpdateModal);
+
+    try {
+      await updateProduct({
+        id: data._id as string,
+        payload: data,
+      }).unwrap();
+
+      setShowUpdateModal(!showUpdateModal);
+    } catch (error) {
+      console.error(error);
+      await Swal.fire("Failed to update product", "", "error");
+    }
+  };
+
+  const handleDelete = async (productId: string) => {
     Swal.fire({
       title: "Are you sure want to delete this product?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Yes",
-      denyButtonText: `No`,
-    }).then((result) => {
+      denyButtonText: "No",
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log("Product deleted successfully");
-        Swal.fire("Deleted Succesfully!", "", "success");
-        deleteProduct(productId).unwrap(); // Use unwrap to handle successful or erroneous responses
+        try {
+          await deleteProduct(productId).unwrap();
+          Swal.fire("Deleted Successfully!", "", "success");
+        } catch (error) {
+          console.error(error);
+          Swal.fire("Failed to delete!", "", "error");
+        }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
     });
   };
 
-  console.log(data);
   const tdata = data.data;
+  console.log(tdata);
 
   const columns = [
     {
       name: "Product Name",
-      selector: (row) => row.name,
+      selector: (row: RowData) => row.name,
     },
     {
       name: "Price",
-      selector: (row) => row.price,
+      selector: (row: RowData) => row.price,
     },
     {
       name: "Brand",
-      selector: (row) => row.brand,
+      selector: (row: RowData) => row.brand,
     },
     {
-      cell: (row) => (
-        // console.log(row._id),
+      cell: (row: RowData) => (
         <button
-          className="btn bg-purple-400 ml-60"
-          onClick={() => handleUpdate(row.id as string)}
+          className="btn bg-purple-400 ml-2"
+          onClick={() => handleUpdate(row)}
         >
           Update
         </button>
       ),
     },
     {
-      cell: (row) => (
+      cell: (row: RowData) => (
         <button
           className="btn bg-red-600"
-          onClick={() => handleDelete(row._id)}
+          onClick={() => handleDelete(row._id as string)}
         >
           Delete
         </button>
       ),
     },
   ];
+
   return (
     <div>
-      <DataTable columns={columns} data={tdata}></DataTable>
+      <DataTable columns={columns} data={tdata} />
+      {showUpdateModal && selectedProduct && (
+        <UpdateModal
+          product={selectedProduct}
+          onClose={() => setShowUpdateModal(!showUpdateModal)}
+          onUpdate={handleUpdate}
+        />
+      )}
     </div>
   );
 };
 
 export default ProductTable;
-function handleUpdate(id: any): void {
-  throw new Error("Function not implemented.");
-}

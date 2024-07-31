@@ -1,3 +1,4 @@
+import { Product } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 export const ProductSlice = baseApi.injectEndpoints({
@@ -26,6 +27,15 @@ export const ProductSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["posts"],
     }),
+
+    UpdateProduct: builder.mutation({
+      query: (data: { id: string; payload: Product }) => ({
+        url: `product/${data.id}`,
+        method: "PUT",
+        body: data.payload,
+      }),
+      invalidatesTags: ["posts"],
+    }),
   }),
 });
 
@@ -33,4 +43,5 @@ export const {
   useAddProductMutation,
   useGetProductQuery,
   useDeleteProductMutation,
+  useUpdateProductMutation,
 } = ProductSlice;

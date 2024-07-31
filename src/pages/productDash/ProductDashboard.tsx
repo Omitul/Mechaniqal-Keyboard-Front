@@ -123,7 +123,19 @@ const ProductDashboard = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block  font-semibold">Rating:</label>
+                <label className="block  font-semibold">Brand</label>
+
+                <input
+                  type="text"
+                  name="brand"
+                  value={formData.brand}
+                  onChange={handleInputChange}
+                  className="form-input mt-1"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block  font-semibold">Rating</label>
 
                 <input
                   type="text"
@@ -136,7 +148,7 @@ const ProductDashboard = () => {
               </div>
 
               <div className="mb-4">
-                <label className="block  font-semibold">Image:</label>
+                <label className="block  font-semibold">Image</label>
 
                 <input
                   type="text"
