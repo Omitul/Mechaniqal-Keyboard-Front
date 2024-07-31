@@ -79,21 +79,32 @@ const ProductTable = () => {
 
   const columns = [
     {
-      name: "Product Name",
+      name: (
+        <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Product Name</div>
+      ),
       selector: (row: RowData) => row.name,
+      cell: (row: RowData) => (
+        <div style={{ fontSize: "1.5rem" }}>{row.name}</div>
+      ),
     },
     {
-      name: "Price",
+      name: <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Price</div>,
       selector: (row: RowData) => row.price,
+      cell: (row: RowData) => (
+        <div style={{ fontSize: "1.5rem" }}>{row.price}</div>
+      ),
     },
     {
-      name: "Brand",
+      name: <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Brand</div>,
       selector: (row: RowData) => row.brand,
+      cell: (row: RowData) => (
+        <div style={{ fontSize: "1.5rem" }}>{row.brand}</div>
+      ),
     },
     {
       cell: (row: RowData) => (
         <button
-          className="btn bg-purple-400 ml-2"
+          className="btn bg-purple-400 ml-52"
           onClick={() => handleUpdate(row)}
         >
           Update
@@ -103,7 +114,7 @@ const ProductTable = () => {
     {
       cell: (row: RowData) => (
         <button
-          className="btn bg-red-600"
+          className="btn bg-red-600 mr-52"
           onClick={() => handleDelete(row._id as string)}
         >
           Delete

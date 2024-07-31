@@ -10,20 +10,37 @@ const ProductsDetails = ({ prod }) => {
   return (
     <div>
       <div className="card card-side bg-base-100 shadow-xl">
-        <figure>
-          <img src={image} alt="Movie" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">{name}</h2>
-          <p>{brand}</p>
-          <p>{available_quantity}.</p>
-          <p>{price}</p>
-          <p>{rating}</p>
+        <div className="flex-1 flex flex-row justify-center items-center">
+          <figure>
+            <img
+              src={image}
+              alt="Movie"
+              className="w-[500px] h-96 object-cover"
+            />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title text-4xl mb-6">{name}</h2>
+            <p className="text-gray-700  text-2xl mb-2 font-bold">{brand}</p>
+            <p className="text-2xl mb-3">
+              <span className="text-gray-600  text-2xl">
+                Available Quantity:{" "}
+              </span>
+              {available_quantity}
+            </p>
+            <p className="text-2xl mb-3">
+              <span className="text-gray-600  text-2xl">Price: </span>
+              {price} BDT
+            </p>
+            <p className="text-2xl mb-3">
+              <span className="text-gray-600  text-2xl">Rating: </span>
+              {rating}
+            </p>
 
-          <div className="card-actions justify-end">
-            <button onClick={handleSeeDetails} className="btn btn-primary">
-              See Details
-            </button>
+            <div className="card-actions justify-end">
+              <button onClick={handleSeeDetails} className="btn btn-primary">
+                See Details
+              </button>
+            </div>
           </div>
         </div>
       </div>

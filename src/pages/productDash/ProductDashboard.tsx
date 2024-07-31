@@ -83,7 +83,7 @@ const ProductDashboard = () => {
                   required
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4 text-2xl">
                 <label className="block  font-semibold">Price</label>
                 <input
                   type="text"

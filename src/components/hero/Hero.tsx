@@ -4,7 +4,7 @@ const Hero = () => {
       className="hero min-h-screen"
       style={{
         backgroundImage:
-          "url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)",
+          "url(https://i.postimg.cc/N0mBNmVF/modern-black-lines-background-vector.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -13,10 +13,9 @@ const Hero = () => {
       <div className="hero-content text-neutral-content text-center">
         <div className="max-w-md">
           <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-          <p className="mb-5">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+          <p className="mb-5 text-2xl text-gray-500">
+            Precision. Speed. Durability. Elevate your gaming and typing
+            experience. Discover the perfect keyboard for you.
           </p>
           <button className="btn btn-primary">Get Started</button>
         </div>
