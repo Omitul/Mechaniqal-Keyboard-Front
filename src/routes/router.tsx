@@ -8,6 +8,7 @@ import ProductDashboard from "../pages/productDash/ProductDashboard";
 import About from "../pages/about/About";
 import Contact from "../pages/contact/Contact";
 import ProductDetailCard from "../components/productdetailcard/ProductDetailCard";
+import Cart from "../components/cart/Cart";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "product-details",
         element: <ProductDetailCard></ProductDetailCard>,
+      },
+      {
+        path: "cart",
+        element: <Cart></Cart>,
       },
       // {
       //   path: "cart",

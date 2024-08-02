@@ -23,8 +23,8 @@ const CustomerReviewDetails = () => {
   }
   const getreviews = (index: number) => {
     if (reviews.length > index && index >= 0) {
-      const { name, email, testimonial } = reviews[index];
-      return { name, email, testimonial };
+      const { name, email, testimonial, image } = reviews[index];
+      return { name, email, testimonial, image };
     } else return null;
   };
 
@@ -41,17 +41,14 @@ const CustomerReviewDetails = () => {
             Customer Reviews
           </h1>
         </div>
-        <div className="carousel w-full bg-slate-800">
+        <div className="carousel w-full bg-slate-800 ">
           <div
             id="slide1"
             className="carousel-item relative w-full  justify-center items-center"
           >
             <div className="flex flex-col h-full">
               <div className="flex-1">
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg"
-                  className="w-full h-full"
-                />
+                <img src={reviews1?.image} className="w-full h-96" />
               </div>
               <div className="flex-1 border border-red-300 bg-black p-4">
                 <p className="text-white font-semibold mt-2">
@@ -82,10 +79,7 @@ const CustomerReviewDetails = () => {
           >
             <div className="flex flex-col h-full">
               <div className="flex-1">
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg"
-                  className="w-full h-full"
-                />
+                <img src={reviews2?.image} className="w-full h-96" />
               </div>
               <div className="flex-1 border border-red-300 bg-black p-4">
                 <p className="text-white font-semibold mt-2">
@@ -116,10 +110,7 @@ const CustomerReviewDetails = () => {
           >
             <div className="flex flex-col h-full">
               <div className="flex-1">
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg"
-                  className="w-full h-full"
-                />
+                <img src={reviews3?.image} className="w-full h-96" />
               </div>
               <div className="flex-1 border border-red-300 bg-black p-4">
                 <p className="text-white font-semibold mt-2">
@@ -149,10 +140,7 @@ const CustomerReviewDetails = () => {
           >
             <div className="flex flex-col h-full">
               <div className="flex-1">
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg"
-                  className="w-full h-full"
-                />
+                <img src={reviews4?.image} className="w-full h-96" />
               </div>
               <div className="flex-1 border border-red-300 bg-black p-4">
                 <p className="text-white font-semibold mt-2">

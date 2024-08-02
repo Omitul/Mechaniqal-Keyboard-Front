@@ -30,3 +30,10 @@ export type RowData = {
   rating: number;
   image: string;
 };
+
+export type cart = {
+  cartItems: string[];
+  cartTotalAmount: number;
+  cartQuantity: number;
+  imageUrl: string;
+};

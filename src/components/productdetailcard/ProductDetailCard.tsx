@@ -1,10 +1,25 @@
-import { Link, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { addToCart } from "../../redux/features/cart/CartSlice";
 
 const ProductDetailCard = () => {
   const location = useLocation();
   const prod = location.state;
   const { name, price, brand, image, available_quantity, rating, description } =
     prod;
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    handleSeeDetails();
+    dispatch(addToCart(prod));
+  };
+
+  const navigate = useNavigate();
+
+  const handleSeeDetails = () => {
+    navigate("/cart", { state: prod });
+  };
 
   return (
     /// ashole ekhane id dhore oi product db theke fetch kore then details show kora lagbe, but lets try for a json data first,as backend is not ready
@@ -41,7 +56,11 @@ const ProductDetailCard = () => {
             </p>
 
             <div className="mt-20">
-              <Link to="/cart" className="btn btn-primary">
+              <Link
+                onClick={handleAddToCart}
+                to="/cart"
+                className="btn btn-primary"
+              >
                 Add To Cart
               </Link>
             </div>
