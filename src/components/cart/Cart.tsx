@@ -1,24 +1,18 @@
-import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import {
-  addToCart,
   clearCart,
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
 } from "../../redux/features/cart/CartSlice";
-import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const location = useLocation();
-  const prod = location.state;
-
   const dispatch = useAppDispatch();
-  const items = useSelector((state) => state.cart.cartItems);
+  const items = useAppSelector((state) => state.cart.cartItems);
   const totalAmount = useAppSelector((state) => state.cart.cartTotalAmount);
   const totalItems = useAppSelector((state) => state.cart.cartQuantity);
-  const image = useAppSelector((state) => state.cart.imageUrl);
 
   const handleRemoveItem = (id: string) => {
     dispatch(removeFromCart(id));
@@ -52,6 +46,14 @@ const Cart = () => {
   console.log("items: ", items);
   return (
     <div className="min-h-screen bg-blue-200">
+      <div className="flex justify-end">
+        <button
+          className="btn btn-primary mt-4 mr-4"
+          onClick={() => handleClearCart()}
+        >
+          Clear Cart
+        </button>
+      </div>
       <h2 className="text-5xl font-bold text-center text-pink-500">
         Shopping Cart
       </h2>
@@ -119,6 +121,13 @@ const Cart = () => {
             Total Price: {totalAmount} BDT
           </span>
         </h2>
+      )}
+      {items && items.length > 0 && (
+        <div className="flex justify-center mt-20">
+          <Link to="/checkout" className="btn btn-primary">
+            Checkout
+          </Link>
+        </div>
       )}
     </div>
   );
