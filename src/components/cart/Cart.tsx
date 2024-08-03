@@ -6,12 +6,26 @@ import {
   removeFromCart,
 } from "../../redux/features/cart/CartSlice";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.cart.cartItems);
+  console.log(items);
+
   const totalAmount = useAppSelector((state) => state.cart.cartTotalAmount);
+
+  const handleNavigateToCheckoutPage = () => {
+    navigate("/checkout", {
+      state: {
+        items: items,
+        totalAmount: totalAmount,
+      },
+    });
+  };
+
   const totalItems = useAppSelector((state) => state.cart.cartQuantity);
 
   const handleRemoveItem = (id: string) => {
@@ -65,7 +79,8 @@ const Cart = () => {
 
       <ul className="flex flex-col items-center justify-center mt-6 gap-y-5">
         {items && items.length > 0 ? (
-          items.map((item) => (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          items.map((item: any) => (
             <li key={item.id} style={{ display: "flex", alignItems: "center" }}>
               <div className="flex flex-row gap-x-5 justify-center items-center">
                 <div>
@@ -124,9 +139,12 @@ const Cart = () => {
       )}
       {items && items.length > 0 && (
         <div className="flex justify-center mt-20">
-          <Link to="/checkout" className="btn btn-primary">
+          <button
+            onClick={handleNavigateToCheckoutPage}
+            className="btn btn-primary"
+          >
             Checkout
-          </Link>
+          </button>
         </div>
       )}
     </div>

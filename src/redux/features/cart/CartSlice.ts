@@ -1,11 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { cart } from "../../../types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+export type CartItem = {
+  _id: string;
+  name: string;
+  image: string;
+  price: number;
+  rating: number;
+  description: string;
+  brand: string;
+  available_quantity: number;
+  cartQuantity: number;
+  cartTotalAmount: number;
+};
 
-const initialState: cart = {
+export type CartState = {
+  cartItems: CartItem[];
+  cartTotalAmount: number;
+  cartQuantity: number;
+};
+
+const initialState: CartState = {
   cartItems: [],
   cartTotalAmount: 0,
   cartQuantity: 0,
-  imageUrl: "",
 };
 
 const cartSlice = createSlice({

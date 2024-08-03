@@ -2,8 +2,8 @@ import DataTable from "react-data-table-component";
 import {
   useDeleteProductMutation,
   useUpdateProductMutation,
-} from "../../redux/features/products/ProductSlice";
-import { useGetProductQuery } from "../../redux/features/products/ProductSlice";
+} from "../../redux/features/products/ProductApi";
+import { useGetProductQuery } from "../../redux/features/products/ProductApi";
 import Swal from "sweetalert2";
 import UpdateModal from "../../components/updatemodalcard/UpdateModal";
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAddProductMutation } from "../../redux/features/products/ProductSlice";
+import { useAddProductMutation } from "../../redux/features/products/ProductApi";
 import ProductTable from "./ProductTable";
 
 const ProductDashboard = () => {

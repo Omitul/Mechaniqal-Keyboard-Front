@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import FeaturedProdDetails from "./FeaturedProdDetails";
-import { useGetProductQuery } from "../../redux/features/products/ProductSlice";
+import { useGetProductQuery } from "../../redux/features/products/ProductApi";
 
 const FeaturedProduct: React.FC = () => {
   const { data, isLoading } = useGetProductQuery({});

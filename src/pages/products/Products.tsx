@@ -1,4 +1,4 @@
-import { useGetProductQuery } from "../../redux/features/products/ProductSlice";
+import { useGetProductQuery } from "../../redux/features/products/ProductApi";
 import { RowData } from "../../types";
 import ProductsDetails from "./ProductsDetails";
 

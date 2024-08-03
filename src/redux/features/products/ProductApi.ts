@@ -1,7 +1,7 @@
 import { Product } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
-export const ProductSlice = baseApi.injectEndpoints({
+export const ProductApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     AddProduct: builder.mutation({
       query: (payload) => ({
@@ -44,4 +44,4 @@ export const {
   useGetProductQuery,
   useDeleteProductMutation,
   useUpdateProductMutation,
-} = ProductSlice;
+} = ProductApi;
