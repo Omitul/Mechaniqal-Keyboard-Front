@@ -69,7 +69,7 @@ const CheckoutForm = () => {
   };
 
   return (
-    <div className="bg-white p-16 rounded-lg shadow-lg w-full max-w-lg mx-auto mt-10 h-full">
+    <div className="bg-blue-100 p-16 rounded-lg shadow-lg w-full max-w-lg mx-auto mt-10 h-full">
       <h1 className="text-2xl font-semibold mb-6">Checkout</h1>
       <form onSubmit={handleSubmit}>
         {/* Name Field */}

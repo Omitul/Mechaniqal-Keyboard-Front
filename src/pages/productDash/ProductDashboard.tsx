@@ -63,7 +63,7 @@ const ProductDashboard = () => {
   };
 
   return (
-    <div className="p-10">
+    <div className="p-12 mb-28">
       <ProductTable></ProductTable>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
