@@ -13,10 +13,10 @@ export const ProductApi = baseApi.injectEndpoints({
     }),
 
     GetProduct: builder.query({
-      query: (searchTerm = "") => ({
+      query: ({ searchTerm = "", sortOption = "priceAscending" }) => ({
         url: "products",
         method: "GET",
-        params: { search: searchTerm },
+        params: { search: String(searchTerm), sort: String(sortOption) },
       }),
       providesTags: ["posts"],
     }),

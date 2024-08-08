@@ -7,30 +7,19 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<RowData[]>([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [sortOption, setSortOption] = useState("");
 
-  // initially fetching
-  const { data, isLoading, error } = useGetProductQuery("");
+  // Fetch initial and search-based data
+  const { data, isLoading, error } = useGetProductQuery({
+    searchTerm: isSearchActive ? searchTerm : "",
+    sortOption,
+  });
 
-  // search er fetching
-  const {
-    data: searchData,
-    isLoading: searchLoading,
-    error: searchError,
-  } = useGetProductQuery(searchTerm);
-
-  // this is for initial data effect ( search kora hoinai )
   useEffect(() => {
-    if (data && !isSearchActive) {
+    if (data) {
       setProducts(data.data);
     }
-  }, [data, isSearchActive]);
-
-  // this is for search dependend data effect ( search applied )
-  useEffect(() => {
-    if (searchData && isSearchActive) {
-      setProducts(searchData.data);
-    }
-  }, [searchData, isSearchActive]);
+  }, [data]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -40,12 +29,27 @@ const Products = () => {
     setIsSearchActive(true);
   };
 
-  if (isLoading || (isSearchActive && searchLoading)) {
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOption(e.target.value);
+    setIsSearchActive(true);
+  };
+
+  const handleClearFilters = () => {
+    setSearchTerm("");
+    setSortOption("");
+    setIsSearchActive(false);
+  };
+
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
-  if (error || (isSearchActive && searchError)) {
-    return <p>Error fetching products! Please try again.</p>;
+  if (error) {
+    return (
+      <p className="text-2xl text-center">
+        No product is available of this name or brand!
+      </p>
+    );
   }
 
   return (
@@ -65,9 +69,25 @@ const Products = () => {
             <button onClick={handleSearchClick} className="btn btn-primary">
               Search
             </button>
+
+            <button onClick={handleClearFilters} className="btn btn-primary">
+              Clear Filter
+            </button>
+          </div>
+
+          <div>
+            <select
+              value={sortOption}
+              onChange={handleSortChange}
+              className="p-2 rounded-lg bg-gray-700 text-white"
+            >
+              <option value="priceAscending">Price: Low to High</option>
+              <option value="priceDescending">Price: High to Low</option>
+            </select>
           </div>
         </div>
       </div>
+
       <div>
         <div className="grid grid-cols-2 gap-4 p-10">
           {products.length > 0 ? (
