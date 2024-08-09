@@ -1,9 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import StarRatings from "react-star-ratings";
+import { Product } from "../../types";
 
-const ProductsDetails = ({ prod }) => {
+type ProductsDetailsProps = {
+  prod: Product;
+};
+
+const ProductsDetails: React.FC<ProductsDetailsProps> = ({ prod }) => {
   const { image, name, brand, available_quantity, price, rating } = prod;
   const navigate = useNavigate();
-
+  const numericRating = Number(rating) || 0;
   const handleSeeDetails = () => {
     navigate("/product-details", { state: prod });
   };
@@ -32,8 +38,16 @@ const ProductsDetails = ({ prod }) => {
               {price} BDT
             </p>
             <p className="text-2xl mb-3">
-              <span className="text-gray-600  text-2xl">Rating: </span>
-              {rating}
+              <span className="text-gray-600 text-2xl">Rating: </span>
+              {/* Display the star rating */}
+              <StarRatings
+                rating={numericRating} // Pass the rating from the product
+                starRatedColor="gold"
+                numberOfStars={5}
+                name="rating"
+                starDimension="30px"
+                starSpacing="5px"
+              />
             </p>
 
             <div className="card-actions justify-end">

@@ -1,22 +1,22 @@
 import DataTable from "react-data-table-component";
-import {
-  useDeleteProductMutation,
-  useUpdateProductMutation,
-} from "../../redux/features/products/ProductApi";
-import { useGetProductQuery } from "../../redux/features/products/ProductApi";
 import Swal from "sweetalert2";
 import UpdateModal from "../../components/updatemodalcard/UpdateModal";
 import { useState } from "react";
 import { Product, RowData } from "../../types";
+import {
+  useDeleteProductMutation,
+  useGetProductQuery,
+  useUpdateProductMutation,
+} from "../../redux/features/products/ProductApi";
 
 const ProductTable = () => {
-  const initialProduct = {
+  const initialProduct: Product = {
     name: "",
     brand: "",
-    price: Number(""),
+    price: 0,
     description: "",
-    available_quantity: Number(""),
-    rating: Number(""),
+    available_quantity: 0,
+    rating: 0,
     image: "",
   };
 
@@ -36,25 +36,34 @@ const ProductTable = () => {
   }
 
   const handleUpdate = async (data: RowData) => {
-    setSelectedProduct(data);
-    setShowUpdateModal(!showUpdateModal);
-
-    try {
-      await updateProduct({
-        id: data._id as string,
-        payload: data,
-      }).unwrap();
-
-      setShowUpdateModal(!showUpdateModal);
-    } catch (error) {
-      console.error(error);
-      await Swal.fire("Failed to update product", "", "error");
+    if (!data._id) {
+      console.error("Invalid product ID:", data._id);
+      return;
     }
+
+    const updatedProduct = {
+      name: data.name,
+      brand: data.brand,
+      price: Number(data.price),
+      description: data.description,
+      available_quantity: Number(data.available_quantity),
+      rating: Number(data.rating),
+      image: data.image,
+    };
+
+    setSelectedProduct({ ...data, ...updatedProduct });
+    setShowUpdateModal(true);
   };
 
   const handleDelete = async (productId: string) => {
+    if (!productId) {
+      console.error("Invalid product ID:", productId);
+      await Swal.fire("Invalid product ID", "", "error");
+      return;
+    }
+
     Swal.fire({
-      title: "Are you sure want to delete this product?",
+      title: "Are you sure you want to delete this product?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Yes",
@@ -65,7 +74,7 @@ const ProductTable = () => {
           await deleteProduct(productId).unwrap();
           Swal.fire("Deleted Successfully!", "", "success");
         } catch (error) {
-          console.error(error);
+          console.error("Failed to delete:", error);
           Swal.fire("Failed to delete!", "", "error");
         }
       } else if (result.isDenied) {
@@ -75,36 +84,25 @@ const ProductTable = () => {
   };
 
   const tdata = data.data;
-  console.log(tdata);
+  console.log("Product Data: ", tdata);
 
   const columns = [
     {
-      name: (
-        <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Product Name</div>
-      ),
+      name: "Product Name",
       selector: (row: RowData) => row.name,
-      cell: (row: RowData) => (
-        <div style={{ fontSize: "1.5rem" }}>{row.name}</div>
-      ),
     },
     {
-      name: <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Price</div>,
+      name: "Price",
       selector: (row: RowData) => row.price,
-      cell: (row: RowData) => (
-        <div style={{ fontSize: "1.5rem" }}>{row.price}</div>
-      ),
     },
     {
-      name: <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Brand</div>,
+      name: "Brand",
       selector: (row: RowData) => row.brand,
-      cell: (row: RowData) => (
-        <div style={{ fontSize: "1.5rem" }}>{row.brand}</div>
-      ),
     },
     {
       cell: (row: RowData) => (
         <button
-          className="btn bg-purple-400 ml-52"
+          className="btn bg-purple-400 ml-2"
           onClick={() => handleUpdate(row)}
         >
           Update
@@ -114,7 +112,7 @@ const ProductTable = () => {
     {
       cell: (row: RowData) => (
         <button
-          className="btn bg-red-600 mr-52"
+          className="btn bg-red-600"
           onClick={() => handleDelete(row._id as string)}
         >
           Delete
@@ -129,8 +127,19 @@ const ProductTable = () => {
       {showUpdateModal && selectedProduct && (
         <UpdateModal
           product={selectedProduct}
-          onClose={() => setShowUpdateModal(!showUpdateModal)}
-          onUpdate={handleUpdate}
+          onClose={() => setShowUpdateModal(false)}
+          onUpdate={async (updatedProduct: Product) => {
+            try {
+              await updateProduct({
+                id: selectedProduct._id,
+                payload: updatedProduct,
+              }).unwrap();
+              setShowUpdateModal(false);
+            } catch (error) {
+              console.error("Update failed:", error);
+              await Swal.fire("Failed to update product", "", "error");
+            }
+          }}
         />
       )}
     </div>

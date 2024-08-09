@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { addToCart } from "../../redux/features/cart/CartSlice";
+import StarRatings from "react-star-ratings";
 
 const ProductDetailCard = () => {
   const location = useLocation();
@@ -16,7 +17,7 @@ const ProductDetailCard = () => {
   };
 
   const navigate = useNavigate();
-
+  const numericRating = Number(rating) || 0;
   const handleSeeDetails = () => {
     navigate("/cart", { state: prod });
   };
@@ -52,7 +53,14 @@ const ProductDetailCard = () => {
               <span className="text-gray-600 text-md">{description}</span>
             </p>
             <p className="mb-4 text-2xl">
-              <span className="font-semibold">Rating:</span> {rating}
+              <StarRatings
+                rating={numericRating} // Pass the rating from the product
+                starRatedColor="gold"
+                numberOfStars={5}
+                name="rating"
+                starDimension="30px"
+                starSpacing="5px"
+              />
             </p>
 
             <div className="mt-20">

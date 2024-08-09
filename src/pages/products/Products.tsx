@@ -69,23 +69,21 @@ const Products = () => {
             <button onClick={handleSearchClick} className="btn btn-primary">
               Search
             </button>
-
-            <button onClick={handleClearFilters} className="btn btn-primary">
-              Clear Filter
-            </button>
-          </div>
-
-          <div>
-            <select
-              value={sortOption}
-              onChange={handleSortChange}
-              className="p-2 rounded-lg bg-gray-700 text-white"
-            >
-              <option value="priceAscending">Price: Low to High</option>
-              <option value="priceDescending">Price: High to Low</option>
-            </select>
           </div>
         </div>
+      </div>
+      <div className="flex flex-row justify-start w-28 gap-x-10 ml-10">
+        <button onClick={handleClearFilters} className="btn btn-primary">
+          Clear Filter
+        </button>
+        <select
+          value={sortOption}
+          onChange={handleSortChange}
+          className="p-2 rounded-lg bg-gray-700 text-white w-60"
+        >
+          <option value="priceAscending">Price: Low to High</option>
+          <option value="priceDescending">Price: High to Low</option>
+        </select>
       </div>
 
       <div>

@@ -9,10 +9,10 @@ const ProductDashboard = () => {
   const [formData, setFormData] = useState({
     name: "",
     brand: "",
-    price: "",
+    price: 0,
     description: "",
-    available_quantity: "",
-    rating: "",
+    available_quantity: 0,
+    rating: 0,
     image: "",
   });
 
@@ -21,10 +21,10 @@ const ProductDashboard = () => {
       setFormData({
         name: "",
         brand: "",
-        price: "",
+        price: 0,
         description: "",
-        available_quantity: "",
-        rating: "",
+        available_quantity: 0,
+        rating: 0,
         image: "",
       });
     }
@@ -35,25 +35,32 @@ const ProductDashboard = () => {
     return <p>Loading......</p>;
   }
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addProduct(formData).unwrap();
+      const updatedData = {
+        ...formData,
+        price: formData.price,
+        available_quantity: formData.available_quantity,
+        rating: formData.rating,
+      };
+
+      await addProduct(updatedData).unwrap();
       console.log("Product added successfully!");
       setFormData({
         name: "",
         brand: "",
-        price: "",
+        price: 0,
         description: "",
-        available_quantity: "",
-        rating: "",
+        available_quantity: 0,
+        rating: 0,
         image: "",
       });
       setShowModal(false);
@@ -83,7 +90,7 @@ const ProductDashboard = () => {
                   required
                 />
               </div>
-              <div className="mb-4 text-2xl">
+              <div className="mb-4">
                 <label className="block  font-semibold">Price</label>
                 <input
                   type="text"

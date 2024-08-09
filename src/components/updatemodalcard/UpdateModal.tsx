@@ -1,64 +1,55 @@
 import { useState, useEffect } from "react";
-import { RowData } from "../../types";
 import Swal from "sweetalert2";
 
+type updateproduct = {
+  name: string;
+  brand: string;
+  price: number;
+  description: string;
+  available_quantity: number;
+  rating: number;
+  image: string;
+};
+
 type UpdateModalProps = {
-  product: {
-    name: string;
-    brand: string;
-    price: number;
-    description: string;
-    available_quantity: number;
-    rating: number;
-    image: string;
-  };
-  onUpdate: (updatedProduct: RowData) => Promise<void>;
+  product: updateproduct;
+  onUpdate: (updatedProduct: updateproduct) => Promise<void>;
   onClose: () => void;
 };
 
 const UpdateModal = ({ product, onUpdate, onClose }: UpdateModalProps) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<updateproduct>({
     name: "",
     brand: "",
-    price: Number(""),
+    price: 0,
     description: "",
-    available_quantity: Number(""),
-    rating: Number(""),
+    available_quantity: 0,
+    rating: 0,
     image: "",
   });
 
   useEffect(() => {
-    setFormData({
-      name: product.name,
-      brand: product.brand,
-      price: product.price, // Convert to string for input value
-      description: product.description,
-      available_quantity: product.available_quantity, // Convert to string for input value
-      rating: product.rating, // Convert to string for input value
-      image: product.image,
-    });
+    setFormData(product);
   }, [product]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    const newValue =
+      name === "price" || name === "available_quantity" || name === "rating"
+        ? parseFloat(value) || 0
+        : value;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: newValue,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await onUpdate({
-        ...product,
-        name: formData.name,
-        brand: formData.brand,
-        price: formData.price,
-        description: formData.description,
-        available_quantity: formData.available_quantity,
-        rating: formData.rating,
-        image: formData.image,
-      });
+      await onUpdate(formData);
 
       onClose();
       await Swal.fire({
@@ -68,6 +59,7 @@ const UpdateModal = ({ product, onUpdate, onClose }: UpdateModalProps) => {
       });
     } catch (error) {
       console.error(error);
+      await Swal.fire("Failed to update product", "", "error");
     }
   };
 
@@ -105,7 +97,7 @@ const UpdateModal = ({ product, onUpdate, onClose }: UpdateModalProps) => {
               <input
                 type="number"
                 name="price"
-                value={formData.price}
+                value={formData.price.toString()}
                 onChange={handleInputChange}
                 className="form-input mt-1"
                 required
@@ -127,7 +119,7 @@ const UpdateModal = ({ product, onUpdate, onClose }: UpdateModalProps) => {
               <input
                 type="number"
                 name="available_quantity"
-                value={formData.available_quantity}
+                value={formData.available_quantity.toString()}
                 onChange={handleInputChange}
                 className="form-input mt-1"
                 required
@@ -138,7 +130,7 @@ const UpdateModal = ({ product, onUpdate, onClose }: UpdateModalProps) => {
               <input
                 type="number"
                 name="rating"
-                value={formData.rating}
+                value={formData.rating.toString()}
                 onChange={handleInputChange}
                 className="form-input mt-1"
                 required
