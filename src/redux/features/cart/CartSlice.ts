@@ -64,18 +64,20 @@ const cartSlice = createSlice({
     incrementQuantity(state, action: PayloadAction<string>) {
       const item = state.cartItems.find((item) => item._id === action.payload);
       if (item) {
-        item.cartQuantity += 1;
-        item.cartTotalAmount += item.price;
-        state.cartTotalAmount += item.price;
-        state.cartQuantity += 1;
+        if (item.cartQuantity < item.available_quantity) {
+          item.cartQuantity += 1;
+          item.cartTotalAmount += Number(item.price);
+          state.cartTotalAmount += Number(item.price);
+          state.cartQuantity += 1;
+        }
       }
     },
     decrementQuantity(state, action: PayloadAction<string>) {
       const item = state.cartItems.find((item) => item._id === action.payload);
       if (item && item.cartQuantity > 1) {
         item.cartQuantity -= 1;
-        item.cartTotalAmount -= item.price;
-        state.cartTotalAmount -= item.price;
+        item.cartTotalAmount -= Number(item.price);
+        state.cartTotalAmount -= Number(item.price);
         state.cartQuantity -= 1;
       }
     },

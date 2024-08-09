@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { addToCart } from "../../redux/features/cart/CartSlice";
 import StarRatings from "react-star-ratings";
+import Swal from "sweetalert2";
 
 const ProductDetailCard = () => {
   const location = useLocation();
@@ -14,8 +15,17 @@ const ProductDetailCard = () => {
   const numericRating = Number(rating) || 0;
 
   const handleAddToCart = () => {
-    handleSeeDetails();
-    dispatch(addToCart(prod));
+    if (available_quantity <= 0) {
+      console.log("hmm asche");
+      Swal.fire({
+        icon: "error",
+        title: "Out of Stock",
+        text: "Sorry, this product is currently out of stock.",
+      });
+    } else {
+      handleSeeDetails();
+      dispatch(addToCart(prod));
+    }
   };
 
   const handleSeeDetails = () => {
@@ -23,7 +33,7 @@ const ProductDetailCard = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 lg:p-8">
+    <div className="p-12 md:p-6 lg:p-8">
       <div className="border border-gray-300 rounded-lg shadow-xl bg-green-300">
         <div className="card card-side bg-base-100 shadow-xl flex flex-col md:flex-row p-4 md:p-8 lg:p-12">
           <figure className="w-full md:w-1/2">
@@ -61,14 +71,21 @@ const ProductDetailCard = () => {
                 starSpacing="3px"
               />
             </p>
+
             <div className="mt-4 md:mt-8">
-              <Link
-                onClick={handleAddToCart}
-                to="/cart"
-                className="btn btn-primary"
-              >
-                Add To Cart
-              </Link>
+              {available_quantity > 0 ? (
+                <Link
+                  onClick={handleAddToCart}
+                  to="/cart"
+                  className="btn btn-primary"
+                >
+                  Add To Cart
+                </Link>
+              ) : (
+                <button className="btn btn-primary" disabled>
+                  Out of Stock
+                </button>
+              )}
             </div>
           </div>
         </div>

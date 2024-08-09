@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddOrderMutation } from "../../redux/features/checkout/CheckoutApi";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../redux/features/cart/CartSlice";
+
+export type Item = {
+  _id: string;
+  available_quantity: number;
+  brand: string;
+  cartQuantity: number;
+  cartTotalAmount: number;
+  description: string;
+  image: string;
+  name: string;
+  price: number;
+  rating: number;
+};
 
 const CheckoutForm = () => {
   const [addOrder, { isLoading }] = useAddOrderMutation();
@@ -16,14 +29,36 @@ const CheckoutForm = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { items, totalAmount } = location.state;
-  console.log(items);
+  console.log("ITEMS:", items);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     address: "",
     payment: "",
+    productIdAndQuantity: [] as { productId: string; quantity: number }[],
   });
+
+  useEffect(() => {
+    console.log("Items ase:", items);
+    if (items) {
+      const productIdAndQuantity = items.map((item: Item) => ({
+        productId: item._id,
+        quantity: item.cartQuantity,
+      }));
+      console.log("Product ID and Quantity:", productIdAndQuantity);
+      setFormData((prevData) => ({
+        ...prevData,
+        productIdAndQuantity,
+      }));
+    }
+  }, [items]);
+
+  // useEffect(() => {
+  //   console.log("Location state:", location.state);
+  //   console.log("Items:", items);
+  // }, [location.state, items]);
+  // // console.log("FORM DATA:", formData);
 
   const dispatch = useDispatch();
 
@@ -32,12 +67,15 @@ const CheckoutForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  console.log("FORMDATA", formData);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const result = await addOrder(formData).unwrap();
 
       if (result.success) {
+        console.log("hoise");
         Swal.fire({
           icon: "success",
           title: "Success",
@@ -49,6 +87,7 @@ const CheckoutForm = () => {
           email: "",
           address: "",
           payment: "",
+          productIdAndQuantity: [] as { productId: string; quantity: number }[],
         });
         dispatch(clearCart());
       } else {
@@ -58,13 +97,26 @@ const CheckoutForm = () => {
           text: "Something went wrong!",
         });
       }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Order submission failed. Please try again later or fill the input fields properly!",
-      });
-      console.error("Order submission failed:", error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const errorMessage =
+        error?.data?.message ||
+        "Order submission failed. Please Fill the blanks properly or try again later!";
+
+      if (errorMessage === "Not Enough Stock") {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Order submission failed. One or more products have insufficient stock!",
+        });
+      } else if (errorMessage === "Validation Error") {
+        Swal.fire({
+          icon: "error",
+          title: "Wrong Inputs",
+          text: "Please Check and fill the inputs properly to place an order!",
+        });
+      }
+      console.error("Order submission failed:", errorMessage);
     }
   };
 
@@ -72,7 +124,6 @@ const CheckoutForm = () => {
     <div className="bg-blue-100 p-16 rounded-lg shadow-lg w-full max-w-lg mx-auto mt-10 h-full">
       <h1 className="text-2xl font-semibold mb-6">Checkout</h1>
       <form onSubmit={handleSubmit}>
-        {/* Name Field */}
         <div className="mb-4">
           <label
             htmlFor="name"
@@ -91,7 +142,6 @@ const CheckoutForm = () => {
           />
         </div>
 
-        {/* Email Field */}
         <div className="mb-4">
           <label
             htmlFor="email"
@@ -110,7 +160,6 @@ const CheckoutForm = () => {
           />
         </div>
 
-        {/* Address Field */}
         <div className="mb-4">
           <label
             htmlFor="address"
@@ -129,7 +178,6 @@ const CheckoutForm = () => {
           />
         </div>
 
-        {/* Payment Method Field */}
         <div className="mb-6">
           <label
             htmlFor="payment-method"
@@ -156,13 +204,12 @@ const CheckoutForm = () => {
           </select>
         </div>
 
-        {/* Submit Button */}
         <button
           onClick={handleSubmit}
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          Submit
+          Place Order
         </button>
       </form>
       <ul className="flex flex-col items-center justify-center mt-6 gap-y-5 bg-blue-300">

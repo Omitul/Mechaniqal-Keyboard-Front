@@ -2,21 +2,22 @@ const Footer: React.FC = () => {
   return (
     <div className="">
       <footer className="footer bg-base-300 text-base-content p-10">
-        <nav>
-          <h6 className="footer-title">Services</h6>
-          <a className="link link-hover">Branding</a>
-          <a className="link link-hover">Design</a>
-          <a className="link link-hover">Marketing</a>
-          <a className="link link-hover">Advertisement</a>
+        <nav className="ml-40">
+          <h6 className="footer-title mb-4">Services</h6>
+          <a className="link link-hover">Custom Keycap Design</a>
+          <a className="link link-hover">Mechanical Keyboard Modding</a>
+          <a className="link link-hover">Switch Lubing Services</a>
+          <a className="link link-hover">Keyboard Repair and Maintenance</a>
         </nav>
-        <nav>
-          <h6 className="footer-title">Company</h6>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+        <nav className="ml-40">
+          <h6 className="footer-title mb-4">Company</h6>
+          <a className="link link-hover">About Us</a>
+          <a className="link link-hover">Contact Us</a>
+          <a className="link link-hover">Our Story</a>
+          <a className="link link-hover">Customer Reviews</a>
+          <a className="link link-hover">Partnerships</a>
         </nav>
-        <nav>
+        <nav className="ml-40">
           <h6 className="footer-title">Social</h6>
           <div className="grid grid-flow-col gap-4">
             <a href="https://twitter.com/">

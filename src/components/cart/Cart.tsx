@@ -13,10 +13,20 @@ const Cart = () => {
 
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.cart.cartItems);
-  console.log(items);
+  console.log("items:-", items);
 
-  const totalAmount =
-    parseFloat(useAppSelector((state) => state.cart.cartTotalAmount)) || 0;
+  console.log(
+    "total Items:------",
+    useAppSelector((state) => state.cart.cartQuantity) || 0
+  );
+
+  const totalAmount = parseFloat(
+    useAppSelector((state) => state.cart.cartTotalAmount) || 0
+  );
+
+  const totalItems = parseFloat(
+    useAppSelector((state) => state.cart.cartQuantity) || 0
+  );
 
   const handleNavigateToCheckoutPage = () => {
     navigate("/checkout", {
@@ -26,8 +36,6 @@ const Cart = () => {
       },
     });
   };
-
-  const totalItems = useAppSelector((state) => state.cart.cartQuantity);
 
   const handleRemoveItem = (id: string) => {
     dispatch(removeFromCart(id));
@@ -75,7 +83,7 @@ const Cart = () => {
 
       <button onClick={handleClearCart}></button>
       <h2 className="text-4xl font-semibold text-gray-800 text-center">
-        Total Items: {totalAmount.toFixed(2)}
+        Total Items: {totalItems}
       </h2>
 
       <ul className="flex flex-col items-center justify-center mt-6 gap-y-5">

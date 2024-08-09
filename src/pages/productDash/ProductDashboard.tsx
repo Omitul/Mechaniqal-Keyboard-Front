@@ -4,15 +4,14 @@ import ProductTable from "./ProductTable";
 
 const ProductDashboard = () => {
   const [addProduct, { isLoading }] = useAddProductMutation();
-
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     brand: "",
-    price: 0,
+    price: Number(""),
     description: "",
-    available_quantity: 0,
-    rating: 0,
+    available_quantity: Number(""),
+    rating: Number(""),
     image: "",
   });
 
@@ -21,10 +20,10 @@ const ProductDashboard = () => {
       setFormData({
         name: "",
         brand: "",
-        price: 0,
+        price: Number(""),
         description: "",
-        available_quantity: 0,
-        rating: 0,
+        available_quantity: Number(""),
+        rating: Number(""),
         image: "",
       });
     }
@@ -36,20 +35,22 @@ const ProductDashboard = () => {
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setShowModal(!showModal);
     try {
       const updatedData = {
         ...formData,
-        price: formData.price,
-        available_quantity: formData.available_quantity,
-        rating: formData.rating,
+        price: Number(formData.price),
+        available_quantity: Number(formData.available_quantity),
+        rating: Number(formData.rating),
       };
 
       await addProduct(updatedData).unwrap();
@@ -57,13 +58,13 @@ const ProductDashboard = () => {
       setFormData({
         name: "",
         brand: "",
-        price: 0,
+        price: Number(""),
         description: "",
-        available_quantity: 0,
-        rating: 0,
+        available_quantity: Number(""),
+        rating: Number(""),
         image: "",
       });
-      setShowModal(false);
+      setShowModal(!showModal);
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +72,7 @@ const ProductDashboard = () => {
 
   return (
     <div className="p-12 mb-28">
-      <ProductTable></ProductTable>
+      <ProductTable />
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -79,8 +80,7 @@ const ProductDashboard = () => {
             <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label className="block  font-semibold"> Name</label>
-
+                <label className="block font-semibold">Name</label>
                 <input
                   type="text"
                   name="name"
@@ -91,9 +91,9 @@ const ProductDashboard = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block  font-semibold">Price</label>
+                <label className="block font-semibold">Price</label>
                 <input
-                  type="text"
+                  type="number"
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
@@ -101,10 +101,8 @@ const ProductDashboard = () => {
                   required
                 />
               </div>
-
               <div className="mb-4">
                 <label className="block font-semibold">Description</label>
-
                 <input
                   type="text"
                   name="description"
@@ -114,14 +112,12 @@ const ProductDashboard = () => {
                   required
                 />
               </div>
-
               <div className="mb-4">
-                <label className="block  font-semibold">
+                <label className="block font-semibold">
                   Available Quantity
                 </label>
-
                 <input
-                  type="text"
+                  type="number"
                   name="available_quantity"
                   value={formData.available_quantity}
                   onChange={handleInputChange}
@@ -130,8 +126,7 @@ const ProductDashboard = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block  font-semibold">Brand</label>
-
+                <label className="block font-semibold">Brand</label>
                 <input
                   type="text"
                   name="brand"
@@ -142,10 +137,9 @@ const ProductDashboard = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block  font-semibold">Rating</label>
-
+                <label className="block font-semibold">Rating</label>
                 <input
-                  type="text"
+                  type="number"
                   name="rating"
                   value={formData.rating}
                   onChange={handleInputChange}
@@ -153,10 +147,8 @@ const ProductDashboard = () => {
                   required
                 />
               </div>
-
               <div className="mb-4">
-                <label className="block  font-semibold">Image</label>
-
+                <label className="block font-semibold">Image</label>
                 <input
                   type="text"
                   name="image"
@@ -166,7 +158,6 @@ const ProductDashboard = () => {
                   required
                 />
               </div>
-
               <div className="flex justify-end mt-4">
                 <button type="submit" className="btn bg-green-500">
                   Submit

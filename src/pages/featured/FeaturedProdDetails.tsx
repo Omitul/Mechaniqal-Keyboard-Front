@@ -1,5 +1,13 @@
-const FeaturedProdDetails = ({ prod }) => {
+import StarRatings from "react-star-ratings";
+import { Product } from "../../types";
+type ProductsDetailsProps = {
+  prod: Product;
+};
+const FeaturedProdDetails: React.FC<ProductsDetailsProps> = ({ prod }) => {
+  console.log("prod", prod);
   const { image, name, brand, available_quantity, price, rating } = prod;
+  const numericRating = Number(rating) || 0;
+
   return (
     <div>
       <div className="card card-side bg-base-100 shadow-xl">
@@ -25,8 +33,15 @@ const FeaturedProdDetails = ({ prod }) => {
               {price} BDT
             </p>
             <p className="text-2xl mb-3">
-              <span className="text-gray-600  text-2xl">Rating: </span>
-              {rating}
+              <span className="text-gray-600">Rating: </span>
+              <StarRatings
+                rating={numericRating}
+                starRatedColor="gold"
+                numberOfStars={5}
+                name="rating"
+                starDimension="20px"
+                starSpacing="3px"
+              />
             </p>
           </div>
         </div>
