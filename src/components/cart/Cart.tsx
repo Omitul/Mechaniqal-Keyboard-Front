@@ -15,7 +15,8 @@ const Cart = () => {
   const items = useAppSelector((state) => state.cart.cartItems);
   console.log(items);
 
-  const totalAmount = useAppSelector((state) => state.cart.cartTotalAmount);
+  const totalAmount =
+    parseFloat(useAppSelector((state) => state.cart.cartTotalAmount)) || 0;
 
   const handleNavigateToCheckoutPage = () => {
     navigate("/checkout", {
@@ -74,7 +75,7 @@ const Cart = () => {
 
       <button onClick={handleClearCart}></button>
       <h2 className="text-4xl font-semibold text-gray-800 text-center">
-        Total Items: {totalItems}
+        Total Items: {totalAmount.toFixed(2)}
       </h2>
 
       <ul className="flex flex-col items-center justify-center mt-6 gap-y-5">

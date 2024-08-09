@@ -39,7 +39,7 @@ const cartSlice = createSlice({
         existingItem.cartTotalAmount += Price; // Update total amount based on price
       } else {
         state.cartItems.push({ ...action.payload, cartQuantity: 1 });
-        state.cartTotalAmount += price; // Add initial price for the new item
+        state.cartTotalAmount += Price; // Add initial price for the new item
       }
       state.cartQuantity += 1; // Update total quantity of items
     },

@@ -88,21 +88,32 @@ const ProductTable = () => {
 
   const columns = [
     {
-      name: "Product Name",
+      name: (
+        <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Product Name</div>
+      ),
       selector: (row: RowData) => row.name,
+      cell: (row: RowData) => (
+        <div style={{ fontSize: "1.5rem" }}>{row.name}</div>
+      ),
     },
     {
-      name: "Price",
+      name: <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Price</div>,
       selector: (row: RowData) => row.price,
+      cell: (row: RowData) => (
+        <div style={{ fontSize: "1.5rem" }}>{row.price}</div>
+      ),
     },
     {
-      name: "Brand",
+      name: <div style={{ fontSize: "2rem", fontWeight: "bold" }}>Brand</div>,
       selector: (row: RowData) => row.brand,
+      cell: (row: RowData) => (
+        <div style={{ fontSize: "1.5rem" }}>{row.brand}</div>
+      ),
     },
     {
       cell: (row: RowData) => (
         <button
-          className="btn bg-purple-400 ml-2"
+          className="btn bg-purple-400 ml-52"
           onClick={() => handleUpdate(row)}
         >
           Update
@@ -112,7 +123,7 @@ const ProductTable = () => {
     {
       cell: (row: RowData) => (
         <button
-          className="btn bg-red-600"
+          className="btn bg-red-600 mr-52"
           onClick={() => handleDelete(row._id as string)}
         >
           Delete
@@ -122,8 +133,36 @@ const ProductTable = () => {
   ];
 
   return (
-    <div>
-      <DataTable columns={columns} data={tdata} />
+    <div className="p-4">
+      <div className="hidden md:block">
+        <DataTable columns={columns} data={tdata} />
+      </div>
+      <div className="md:hidden">
+        {/* mobile or smaller device er jnno  */}
+        {tdata.map((row: RowData) => (
+          <div key={row._id} className="mb-4 p-4 border rounded-lg">
+            <div className="text-lg font-bold">{row.name}</div>
+            <div className="text-sm text-gray-500">Price: {row.price} BDT</div>
+            <div className="text-sm text-gray-500">Brand: {row.brand}</div>
+            <div className="mt-2 flex space-x-2">
+              <button
+                className="btn bg-purple-400 text-white py-2 px-4 rounded"
+                onClick={() => handleUpdate(row)}
+              >
+                Update
+              </button>
+              <button
+                className="btn bg-red-600 text-white py-2 px-4 rounded"
+                onClick={() => handleDelete(row._id as string)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* larger device  */}
       {showUpdateModal && selectedProduct && (
         <UpdateModal
           product={selectedProduct}

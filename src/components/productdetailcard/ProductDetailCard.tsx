@@ -10,60 +10,58 @@ const ProductDetailCard = () => {
     prod;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const numericRating = Number(rating) || 0;
 
   const handleAddToCart = () => {
     handleSeeDetails();
     dispatch(addToCart(prod));
   };
 
-  const navigate = useNavigate();
-  const numericRating = Number(rating) || 0;
   const handleSeeDetails = () => {
     navigate("/cart", { state: prod });
   };
 
   return (
-    /// ashole ekhane id dhore oi product db theke fetch kore then details show kora lagbe, but lets try for a json data first,as backend is not ready
-
-    <div>
-      <div className="border border-gray-300 rounded-lg shadow-xl p-6 bg-green-300">
-        <div className="card card-side bg-base-100 shadow-xl p-32 max-w-max  mx-auto gap-x-7 flex-1">
-          <figure>
+    <div className="p-4 md:p-6 lg:p-8">
+      <div className="border border-gray-300 rounded-lg shadow-xl bg-green-300">
+        <div className="card card-side bg-base-100 shadow-xl flex flex-col md:flex-row p-4 md:p-8 lg:p-12">
+          <figure className="w-full md:w-1/2">
             <img
               src={image}
-              className="h-full w-full object-cover"
-              alt="Movie"
+              className="w-full h-auto md:h-96 object-cover"
+              alt={name}
             />
           </figure>
-          <div className="">
-            <h2 className="text-6xl mb-4">{name}</h2>
-            <p className="mb-4 text-2xl">
+          <div className="md:w-1/2">
+            <h2 className="text-2xl md:text-4xl lg:text-6xl mb-4">{name}</h2>
+            <p className="mb-2 text-xl md:text-2xl">
               <span className="font-semibold">Brand:</span> {brand}
             </p>
-            <p className="mb-4 text-2xl">
+            <p className="mb-2 text-xl md:text-2xl">
               <span className="font-semibold">Available Quantity:</span>{" "}
               {available_quantity}
             </p>
-            <p className="mb-4 text-2xl">
-              <span className="font-semibold">Price: </span>
-              {price}
+            <p className="mb-2 text-xl md:text-2xl">
+              <span className="font-semibold">Price:</span> {price}
             </p>
-            <p className="mb-4 text-2xl">
-              <span className="font-semibold ">Description: </span>
-              <span className="text-gray-600 text-md">{description}</span>
+            <p className="mb-2 text-xl md:text-2xl">
+              <span className="font-semibold">Description: </span>
+              <span className="text-gray-600 text-sm md:text-base">
+                {description}
+              </span>
             </p>
-            <p className="mb-4 text-2xl">
+            <p className="mb-4 text-xl md:text-2xl">
               <StarRatings
-                rating={numericRating} // Pass the rating from the product
+                rating={numericRating}
                 starRatedColor="gold"
                 numberOfStars={5}
                 name="rating"
-                starDimension="30px"
-                starSpacing="5px"
+                starDimension="20px"
+                starSpacing="3px"
               />
             </p>
-
-            <div className="mt-20">
+            <div className="mt-4 md:mt-8">
               <Link
                 onClick={handleAddToCart}
                 to="/cart"

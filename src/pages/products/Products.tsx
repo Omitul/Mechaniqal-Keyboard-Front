@@ -87,7 +87,7 @@ const Products = () => {
       </div>
 
       <div>
-        <div className="grid grid-cols-2 gap-4 p-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-10">
           {products.length > 0 ? (
             products.map((prod: RowData) => (
               <ProductsDetails key={prod._id} prod={prod} />
