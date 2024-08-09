@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 
+type Brands = {
+  logo: string;
+  name: string;
+};
 const TopBrands = () => {
-  const [brands, setBrands] = useState([]);
+  const [brands, setBrands] = useState<Brands[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
