@@ -33,7 +33,7 @@ const ProductDetailCard = () => {
   };
 
   return (
-    <div className="p-12 md:p-6 lg:p-8">
+    <div className="mb-8 p-12 md:p-6 lg:p-8">
       <div className="border border-gray-300 rounded-lg shadow-xl bg-green-300">
         <div className="card card-side bg-base-100 shadow-xl flex flex-col md:flex-row p-4 md:p-8 lg:p-12">
           <figure className="w-full md:w-1/2">
