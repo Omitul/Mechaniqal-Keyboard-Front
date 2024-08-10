@@ -8,9 +8,9 @@ type ProductsDetailsProps = {
 
 const ProductsDetails: React.FC<ProductsDetailsProps> = ({ prod }) => {
   const { image, name, brand, available_quantity, price, rating } = prod;
-  const navigate = useNavigate();
-  const numericRating = Number(rating) || 0;
 
+  const numericRating = Number(rating) || 0;
+  const navigate = useNavigate();
   const handleSeeDetails = () => {
     navigate("/product-details", { state: prod });
   };
@@ -54,7 +54,7 @@ const ProductsDetails: React.FC<ProductsDetailsProps> = ({ prod }) => {
               onClick={handleSeeDetails}
               className="btn btn-primary px-4 py-2 text-lg md:text-xl"
             >
-              See Details
+              Show Details
             </button>
           </div>
         </div>

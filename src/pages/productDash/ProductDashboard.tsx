@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAddProductMutation } from "../../redux/features/products/ProductApi";
 import ProductTable from "./ProductTable";
+import Swal from "sweetalert2";
 
 const ProductDashboard = () => {
   const [addProduct, { isLoading }] = useAddProductMutation();
@@ -54,7 +55,13 @@ const ProductDashboard = () => {
       };
 
       await addProduct(updatedData).unwrap();
-      console.log("Product added successfully!");
+
+      Swal.fire({
+        icon: "success",
+        title: "Product Added",
+        text: "Product added successfully!",
+      });
+
       setFormData({
         name: "",
         brand: "",
@@ -67,6 +74,11 @@ const ProductDashboard = () => {
       setShowModal(!showModal);
     } catch (error) {
       console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while adding the product.",
+      });
     }
   };
 

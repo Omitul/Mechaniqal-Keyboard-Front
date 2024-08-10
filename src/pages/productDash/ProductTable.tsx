@@ -170,7 +170,7 @@ const ProductTable = () => {
           onUpdate={async (updatedProduct: Product) => {
             try {
               await updateProduct({
-                id: selectedProduct._id,
+                id: selectedProduct._id as string,
                 payload: updatedProduct,
               }).unwrap();
               setShowUpdateModal(false);

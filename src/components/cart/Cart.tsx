@@ -20,13 +20,9 @@ const Cart = () => {
     useAppSelector((state) => state.cart.cartQuantity) || 0
   );
 
-  const totalAmount = parseFloat(
-    useAppSelector((state) => state.cart.cartTotalAmount) || 0
-  );
-
-  const totalItems = parseFloat(
-    useAppSelector((state) => state.cart.cartQuantity) || 0
-  );
+  const totalAmount =
+    useAppSelector((state) => state.cart.cartTotalAmount) || 0;
+  const totalItems = useAppSelector((state) => state.cart.cartQuantity) || 0;
 
   const handleNavigateToCheckoutPage = () => {
     navigate("/checkout", {

@@ -55,7 +55,7 @@ const Navbar = () => {
           </ul>
         </div>
         <h1 style={{ fontSize: "1.5rem", fontWeight: "500" }}>
-          Mechaniqal Keyboard
+          <Link to="/">Mechaniqal Keyboard</Link>
         </h1>
       </div>
       <div className="navbar-center hidden lg:flex">

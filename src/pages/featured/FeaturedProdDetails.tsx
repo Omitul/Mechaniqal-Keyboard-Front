@@ -1,5 +1,6 @@
 import StarRatings from "react-star-ratings";
 import { Product } from "../../types";
+import { useNavigate } from "react-router-dom";
 type ProductsDetailsProps = {
   prod: Product;
 };
@@ -7,7 +8,10 @@ const FeaturedProdDetails: React.FC<ProductsDetailsProps> = ({ prod }) => {
   console.log("prod", prod);
   const { image, name, brand, available_quantity, price, rating } = prod;
   const numericRating = Number(rating) || 0;
-
+  const navigate = useNavigate();
+  const handleSeeDetails = () => {
+    navigate("/product-details", { state: prod });
+  };
   return (
     <div>
       <div className="card card-side bg-base-100 shadow-xl">
@@ -43,6 +47,14 @@ const FeaturedProdDetails: React.FC<ProductsDetailsProps> = ({ prod }) => {
                 starSpacing="3px"
               />
             </p>
+            <div className="card-actions flex justify-end">
+              <button
+                onClick={handleSeeDetails}
+                className="btn btn-primary px-4 py-2 text-lg md:text-xl"
+              >
+                See Details
+              </button>
+            </div>
           </div>
         </div>
       </div>

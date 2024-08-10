@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import FeaturedProdDetails from "./FeaturedProdDetails";
 import { useGetProductQuery } from "../../redux/features/products/ProductApi";
+import { Product } from "../../types";
 
 const FeaturedProduct: React.FC = () => {
-  const { data, isLoading } = useGetProductQuery({});
+  const { data, isLoading } = useGetProductQuery({ sort: { _id: -1 } }); // latest products er jnno sort
   if (isLoading) {
     <p>Loading...</p>;
   }
@@ -16,16 +17,16 @@ const FeaturedProduct: React.FC = () => {
         {tdata &&
           tdata.data
             .slice(0, 6)
-            .map((prod) => (
+            .map((prod: Product) => (
               <FeaturedProdDetails
-                key={prod.id}
+                key={prod._id}
                 prod={prod}
               ></FeaturedProdDetails>
             ))}
       </div>
       <div className="flex items-center justify-center mb-3">
         <Link to="/products" className="btn btn-primary">
-          See Details
+          See More
         </Link>
       </div>
     </div>

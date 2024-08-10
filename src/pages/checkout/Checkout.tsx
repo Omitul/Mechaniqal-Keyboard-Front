@@ -62,20 +62,20 @@ const CheckoutForm = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  console.log("FORMDATA", formData);
+  console.log(formData);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
       const result = await addOrder(formData).unwrap();
 
       if (result.success) {
-        console.log("hoise");
         Swal.fire({
           icon: "success",
           title: "Success",
