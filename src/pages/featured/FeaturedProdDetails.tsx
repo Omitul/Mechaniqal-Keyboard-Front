@@ -11,7 +11,7 @@ const FeaturedProdDetails: React.FC<ProductsDetailsProps> = ({ prod }) => {
   return (
     <div>
       <div className="card card-side bg-base-100 shadow-xl">
-        <div className="flex-1 flex flex-row justify-center items-center">
+        <div className="flex-1 flex flex-col md:flex-row justify-center items-center">
           <figure>
             <img
               src={image}

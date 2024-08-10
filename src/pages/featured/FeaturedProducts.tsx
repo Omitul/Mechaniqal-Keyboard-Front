@@ -12,7 +12,7 @@ const FeaturedProduct: React.FC = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-4 p-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-10">
         {tdata &&
           tdata.data
             .slice(0, 6)
