@@ -59,6 +59,8 @@ npm install
 npm run dev
 ```
 
+### Live Link: https://mechaniqal-keyboard-front.vercel.app/
+
 
 
 
